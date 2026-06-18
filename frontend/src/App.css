@@ -1,0 +1,191 @@
+.app {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.app-header p {
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+.command-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.command-bar input {
+  flex: 1;
+}
+
+.command-bar-error {
+  color: var(--danger);
+  font-size: 13px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+@media (max-width: 1000px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dashboard-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.panel h2 {
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.panel-empty {
+  color: var(--text-dim);
+  font-size: 13px;
+  margin: 0;
+}
+
+.workflow-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.status-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  flex-shrink: 0;
+}
+
+.status-dot.ok {
+  background: var(--ok);
+}
+
+.status-dot.down {
+  background: var(--danger);
+}
+
+.agent-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.agent-list li {
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+}
+
+.agent-list span {
+  color: var(--text-dim);
+}
+
+.activity-feed,
+.approval-queue {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.activity-item {
+  display: flex;
+  gap: 8px;
+  font-size: 13px;
+  font-family: var(--mono);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+}
+
+.activity-time {
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+
+.activity-approval_requested .activity-text {
+  color: var(--accent);
+}
+
+.approval-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.approval-agent {
+  font-weight: 600;
+  color: var(--text-h);
+  margin-right: 6px;
+}
+
+.approval-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.approve {
+  border-color: var(--ok);
+  color: var(--ok);
+}
+
+.reject {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.approval-status-label {
+  color: var(--text-dim);
+  text-transform: capitalize;
+  flex-shrink: 0;
+}
