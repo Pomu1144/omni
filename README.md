@@ -33,31 +33,43 @@ and surfaced in the Approval Queue panel; otherwise it's broadcast on the
 
 ## Running locally
 
-### Backend
+One-time setup, then a single command starts both the backend and frontend:
 
 ```bash
-cd backend
-python3 -m venv .venv
-.venv/bin/pip install -r requirements.txt
-.venv/bin/uvicorn app.main:app --reload --port 8000
+npm run setup   # creates backend/.venv, installs Python + frontend deps
+npm run dev     # runs uvicorn (:8000) and vite (:5173) together
 ```
 
-Runs on `http://localhost:8000`. Optional env vars: `OLLAMA_URL` (default
-`http://localhost:11434`), `OLLAMA_MODEL` (default `llama3`), `CORS_ORIGINS`
-(default `http://localhost:5173`).
+Frontend is on `http://localhost:5173`, backend on `http://localhost:8000`.
+`npm run dev` uses `concurrently` (declared in the root `package.json`) to run
+both processes in one terminal with labeled, color-coded output; `Ctrl+C`
+stops both.
 
-Run tests with `.venv/bin/pytest`.
-
-### Frontend
+If you'd rather run them separately (e.g. for backend-only debugging):
 
 ```bash
-cd frontend
-npm install
-npm run dev
+# backend
+cd backend && .venv/bin/uvicorn app.main:app --reload --port 8000
+
+# frontend
+npm --prefix frontend run dev
 ```
 
-Runs on `http://localhost:5173`. Copy `.env.example` to `.env` to point it at
-a non-default backend URL (`VITE_API_BASE_URL`).
+Optional backend env vars: `OLLAMA_URL` (default `http://localhost:11434`),
+`OLLAMA_MODEL` (default `llama3`), `CORS_ORIGINS` (default
+`http://localhost:5173`). Run backend tests with `backend/.venv/bin/pytest`.
+
+Copy `frontend/.env.example` to `frontend/.env` to point the dashboard at a
+non-default backend URL (`VITE_API_BASE_URL`).
+
+### Voice (listening + speaking)
+
+The dashboard's Voice panel uses the browser-native Web Speech API: tap "Hold
+to talk to Jarvis" to dictate a command (same path as typing one), and toggle
+"Speak replies aloud" to have responses read back via speech synthesis. This
+needs **Chrome or Edge** (Firefox/Safari don't implement `SpeechRecognition`)
+and microphone permission — no API keys or cloud services involved. There's
+no wake word or always-on listening yet; every command needs a tap.
 
 ### Optional: local Ollama
 

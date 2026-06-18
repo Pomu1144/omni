@@ -189,3 +189,115 @@
   text-transform: capitalize;
   flex-shrink: 0;
 }
+
+.voice-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.voice-orb {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.voice-orb-core {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  box-shadow: 0 0 12px var(--text-dim);
+  animation: orb-breathe 3s ease-in-out infinite;
+}
+
+.voice-orb-ripple {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  opacity: 0;
+}
+
+.voice-orb-listening .voice-orb-core {
+  background: var(--accent);
+  box-shadow: 0 0 18px var(--accent);
+  animation: orb-pulse-fast 1s ease-in-out infinite;
+}
+
+.voice-orb-listening .voice-orb-ripple {
+  border-color: var(--accent);
+  animation: orb-ripple 1.4s ease-out infinite;
+}
+
+.voice-orb-listening .voice-orb-ripple-delay {
+  animation-delay: 0.7s;
+}
+
+.voice-orb-speaking .voice-orb-core {
+  background: var(--ok);
+  box-shadow: 0 0 18px var(--ok);
+  animation: orb-pulse-fast 0.5s ease-in-out infinite;
+}
+
+.voice-orb-speaking .voice-orb-ripple {
+  border-color: var(--ok);
+  animation: orb-ripple 0.9s ease-out infinite;
+}
+
+.voice-orb-speaking .voice-orb-ripple-delay {
+  animation-delay: 0.45s;
+}
+
+@keyframes orb-breathe {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+@keyframes orb-pulse-fast {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+@keyframes orb-ripple {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+.voice-mic-button {
+  width: 100%;
+}
+
+.voice-mic-button.active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.voice-replies-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.voice-last-heard {
+  font-size: 13px;
+  color: var(--text-dim);
+  text-align: center;
+  margin: 0;
+}
+
+.voice-interim {
+  color: var(--text-h);
+  font-style: italic;
+}
+
+.voice-control-unsupported {
+  text-align: center;
+}

@@ -7,9 +7,11 @@ import { CommandBar } from "./components/CommandBar";
 import { Panel } from "./components/Panel";
 import { PlaceholderPanel } from "./components/PlaceholderPanel";
 import { StatusPanel } from "./components/StatusPanel";
+import { VoiceControl } from "./components/VoiceControl";
 import { WorkflowButtons } from "./components/WorkflowButtons";
 import { useJarvisSocket } from "./hooks/useJarvisSocket";
-import type { ActivityEvent, AgentInfo, CommandResponse, HealthStatus, PendingApproval, WorkflowButtonDef } from "./types";
+import { useSpeechSynthesis } from "./hooks/useSpeechSynthesis";
+import type { ActivityEvent, AgentInfo, HealthStatus, PendingApproval, WorkflowButtonDef } from "./types";
 
 const HEALTH_POLL_MS = 10000;
 const MAX_ACTIVITY_ITEMS = 100;
@@ -20,6 +22,9 @@ function App() {
   const [workflows, setWorkflows] = useState<WorkflowButtonDef[]>([]);
   const [activity, setActivity] = useState<ActivityEvent[]>([]);
   const [approvals, setApprovals] = useState<PendingApproval[]>([]);
+  const [voiceRepliesEnabled, setVoiceRepliesEnabled] = useState(false);
+
+  const { supported: ttsSupported, speaking, speak } = useSpeechSynthesis();
 
   const refreshApprovals = useCallback(() => {
     api.approvals().then(setApprovals).catch(() => undefined);
@@ -53,23 +58,15 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
-  function handleCommandResult(result: CommandResponse) {
-    // The backend also broadcasts this over the WebSocket; this local update
-    // just avoids a flash of "nothing happened" while that round-trips.
-    if (result.status === "completed" && result.response) {
-      setActivity((previous) =>
-        [
-          {
-            id: `local-${Date.now()}`,
-            type: "agent_result",
-            timestamp: new Date().toISOString(),
-            payload: { agent: result.agent, response: result.response },
-          },
-          ...previous,
-        ].slice(0, MAX_ACTIVITY_ITEMS),
-      );
-    }
-  }
+  const sendCommand = useCallback(
+    async (text: string) => {
+      const result = await api.sendCommand(text);
+      if (result.status === "completed" && result.response && voiceRepliesEnabled) {
+        speak(result.response);
+      }
+    },
+    [voiceRepliesEnabled, speak],
+  );
 
   function handleApprovalDecided(updated: PendingApproval) {
     setApprovals((previous) => previous.map((item) => (item.id === updated.id ? updated : item)));
@@ -82,12 +79,21 @@ function App() {
         <p>Monitor 2 dashboard — prepares, drafts, and automates; never finalizes risky actions without your approval.</p>
       </header>
 
-      <CommandBar onResult={handleCommandResult} />
+      <CommandBar sendCommand={sendCommand} />
 
       <main className="dashboard-grid">
         <div className="dashboard-column">
+          <Panel title="Voice">
+            <VoiceControl
+              onTranscript={sendCommand}
+              speaking={speaking}
+              ttsSupported={ttsSupported}
+              voiceRepliesEnabled={voiceRepliesEnabled}
+              onToggleVoiceReplies={() => setVoiceRepliesEnabled((value) => !value)}
+            />
+          </Panel>
           <Panel title="Workflows">
-            <WorkflowButtons workflows={workflows} onResult={handleCommandResult} />
+            <WorkflowButtons workflows={workflows} sendCommand={sendCommand} />
           </Panel>
           <Panel title="Status">
             <StatusPanel health={health} agents={agents} wsConnected={connected} />

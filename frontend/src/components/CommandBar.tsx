@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { api } from "../api/client";
-import type { CommandResponse } from "../types";
 
 interface CommandBarProps {
-  onResult: (result: CommandResponse, commandText: string) => void;
+  sendCommand: (text: string) => Promise<void>;
 }
 
-export function CommandBar({ onResult }: CommandBarProps) {
+export function CommandBar({ sendCommand }: CommandBarProps) {
   const [text, setText] = useState("");
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -19,8 +17,7 @@ export function CommandBar({ onResult }: CommandBarProps) {
     setSending(true);
     setError(null);
     try {
-      const result = await api.sendCommand(command);
-      onResult(result, command);
+      await sendCommand(command);
       setText("");
     } catch {
       setError("Couldn't reach the Jarvis backend. Is it running on port 8000?");
@@ -35,7 +32,7 @@ export function CommandBar({ onResult }: CommandBarProps) {
         type="text"
         value={text}
         onChange={(event) => setText(event.target.value)}
-        placeholder='Type a command, e.g. "git status" — voice input lands in a later milestone'
+        placeholder='Type a command, e.g. "git status" — or use the mic'
         disabled={sending}
       />
       <button type="submit" disabled={sending || !text.trim()}>

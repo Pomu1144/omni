@@ -22,12 +22,19 @@ Checked items are scaffolded and working; unchecked items are not started.
       Approve/Reject. Only a simulated "open PR" demo action is gated on it
       today; future risky agents (real PR merges, sends, bookings, payments)
       must route through this same queue rather than acting directly.
+- [x] 10–11. Voice input/output (browser-native, scaffolded) — push-to-talk
+      mic button using the Web Speech API (`SpeechRecognition`) feeds
+      transcripts straight into the same `sendCommand` path as typed text, and
+      an animated orb (`VoiceOrb`) shows idle/listening/speaking state. A
+      "Speak replies aloud" toggle uses `speechSynthesis` to read agent
+      responses back. No wake word, no always-listening mode, and no cloud STT/
+      TTS — this only works in Chrome/Edge, and needs a real microphone, so it
+      can't be exercised headless in CI/sandbox runs.
 
-Not started: 8 (Docs/TDD generator), 9 (Playwright browser automation), 10–11
-(voice input/output), 13 (calendar/email integration), 14 (reservation
-assistant), 15 (persistent memory — currently everything is in-memory and
-resets on restart), 16 (full multi-agent routing — only GitAgent + OllamaAgent
-exist today).
+Not started: 8 (Docs/TDD generator), 9 (Playwright browser automation), 13
+(calendar/email integration), 14 (reservation assistant), 15 (persistent
+memory — currently everything is in-memory and resets on restart), 16 (full
+multi-agent routing — only GitAgent + OllamaAgent exist today).
 
 ## Why this slice first
 
