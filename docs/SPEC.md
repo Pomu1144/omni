@@ -1,13 +1,13 @@
-# Jarvis Command Center — Product Spec
+# Omni Command Center — Product Spec
 
-This document is the full feature vision for the Jarvis Command Center, captured as
+This document is the full feature vision for the Omni Command Center, captured as
 the source-of-truth product spec. It is intentionally aspirational and large — see
 [ROADMAP.md](./ROADMAP.md) for what is actually built and in what order.
 
 ## Guiding system prompt
 
 ```txt
-Build a local Jarvis-like AI command center for a triple-monitor software engineering and productivity setup.
+Build a local Omni-like AI command center for a triple-monitor software engineering and productivity setup.
 
 The system should act as one main orchestrator with specialized workflow agents. It should support voice control, text commands, browser automation, Git/GitHub/Jira workflows, technical documentation generation, email/calendar assistance, restaurant and ride reservation preparation, local/private mode, cloud-enhanced mode, memory, and human approval gates.
 
@@ -20,11 +20,11 @@ The voice should sound like a calm, intelligent male assistant: professional, sl
 
 **The most important part:** this is not "a chatbot." It's a personal AI workflow
 operating system. Any purchase, payment, booking, ride request, cancellation, email
-send, PR merge, or destructive action requires explicit user approval — Jarvis
+send, PR merge, or destructive action requires explicit user approval — Omni
 prepares, compares, drafts, navigates, and automates, but does not finalize
 consequential actions on its own.
 
-## 1. Core Jarvis System
+## 1. Core Omni System
 
 - Voice command input
 - Text command input
@@ -52,13 +52,13 @@ consequential actions on its own.
 
 **Monitor 1 — Main Work Area**: VS Code, PyCharm, Browser, Jira, GitHub, AWS Q, Claude, Documents, local app testing.
 
-**Monitor 2 — Jarvis Command Center**: voice/chat control, workflow buttons, current task, approval queue, agent logs, calendar summary, email summary, active ticket summary, browser automation state.
+**Monitor 2 — Omni Command Center**: voice/chat control, workflow buttons, current task, approval queue, agent logs, calendar summary, email summary, active ticket summary, browser automation state.
 
 **Monitor 3 — Context and Automation View**: terminal output, git diffs, test logs, Playwright browser window, screenshots, meeting notes, technical design docs, error traces, research notes.
 
 ## 3. Voice System
 
-**Input**: wake word ("Jarvis"), push-to-talk shortcut, always-listening optional mode, voice activity detection, noise suppression, command interruption, "stop"/"cancel" command, "repeat that" command, "explain simpler" command, "do not act, just explain" command, voice confirmation before risky actions, speech-to-text transcript log, local STT option, cloud STT option, meeting transcription mode, dictation mode for documents/emails.
+**Input**: wake word ("Omni"), push-to-talk shortcut, always-listening optional mode, voice activity detection, noise suppression, command interruption, "stop"/"cancel" command, "repeat that" command, "explain simpler" command, "do not act, just explain" command, voice confirmation before risky actions, speech-to-text transcript log, local STT option, cloud STT option, meeting transcription mode, dictation mode for documents/emails.
 
 **Output**: good male assistant voice, calm/confident/professional tone, low-latency streaming speech, adjustable speaking speed, short-answer mode, detailed-answer mode, whisper mode, meeting/work/casual mode voice, alert voice, error voice, confirmation voice, "do you want me to proceed?" voice prompt.
 
@@ -72,7 +72,7 @@ consequential actions on its own.
 
 **Testing skills**: login flow testing, form validation testing, button click testing, navigation testing, screenshot capture, bug report generation, console error summary, broken link checker, network request failure checker, regression test runner, Playwright test generator, "record my browser actions" mode, "turn this manual test into automation" mode.
 
-**Rule**: Jarvis can navigate and prepare actions but must stop before payment, purchase, booking confirmation, ride request confirmation, deleting data, submitting sensitive forms, sending messages, changing passwords, or approving financial transactions.
+**Rule**: Omni can navigate and prepare actions but must stop before payment, purchase, booking confirmation, ride request confirmation, deleting data, submitting sensitive forms, sending messages, changing passwords, or approving financial transactions.
 
 ## 5. Reservation and Booking Skills
 
@@ -80,7 +80,7 @@ consequential actions on its own.
 
 **Lyft**: open Lyft, estimate price/pickup time, schedule ride, compare options, prepare pickup/dropoff, save frequent places, warn about high prices, open final confirmation page, ask before booking.
 
-**Ride safety**: Jarvis should always ask "I found a ride for $X arriving in Y minutes. Do you want me to open the final confirmation screen?" — never silently book.
+**Ride safety**: Omni should always ask "I found a ride for $X arriving in Y minutes. Do you want me to open the final confirmation screen?" — never silently book.
 
 **OpenTable**: search by city/cuisine/rating/price/date/time/party size, check availability, compare times, read reviews, suggest restaurants, open reservation page, prepare booking, ask for final approval.
 
@@ -88,7 +88,7 @@ consequential actions on its own.
 
 **General**: "find dinner for 2 near me at 7 PM", "find a birthday dinner under $50/person", "find Asian food near OSU", "find a quiet restaurant for a meeting", "find restaurants with parking/open now/that take reservations", "check OpenTable and Resy", "give me 3 options", "book the best one after I approve".
 
-**Travel/appointments (later)**: hotel/flight/car rental search, barber/doctor/dentist appointments, gym class booking, study room booking, waitlist monitoring, event tickets, parking reservation, airport pickup planning, calendar-based travel prep. Jarvis prepares and guides, never finalizes payments without approval.
+**Travel/appointments (later)**: hotel/flight/car rental search, barber/doctor/dentist appointments, gym class booking, study room booking, waitlist monitoring, event tickets, parking reservation, airport pickup planning, calendar-based travel prep. Omni prepares and guides, never finalizes payments without approval.
 
 ## 6. Work / Software Engineering Features
 
@@ -146,9 +146,9 @@ Explain like I know nothing / junior dev / senior dev, quiz me mode, flashcard g
 
 ## 13. Agent Roles
 
-One Jarvis controller, not independent bots:
+One Omni controller, not independent bots:
 
-- **JarvisCore** — main router
+- **OmniCore** — main router
 - **VoiceAgent** — speech input/output
 - **BrowserAgent** — browser control
 - **CodeAgent** — code explanation

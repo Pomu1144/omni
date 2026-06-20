@@ -25,7 +25,7 @@ export function CommandBar({ onStart, onResult }: CommandBarProps) {
       onResult(result, command);
       setText("");
     } catch {
-      setError("Couldn't reach the Jarvis backend. Is it running on port 8000?");
+      setError("Couldn't reach the Omni backend. Is it running on port 8000?");
     } finally {
       setSending(false);
     }

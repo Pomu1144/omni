@@ -4,7 +4,7 @@ import type { ActivityEvent } from "../types";
 
 const RECONNECT_DELAY_MS = 2000;
 
-export function useJarvisSocket(onEvent: (event: ActivityEvent) => void) {
+export function useOmniSocket(onEvent: (event: ActivityEvent) => void) {
   const [connected, setConnected] = useState(false);
   const onEventRef = useRef(onEvent);
 

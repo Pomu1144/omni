@@ -15,6 +15,6 @@ def test_voice_status_not_configured_by_default() -> None:
 
 
 def test_speak_returns_503_when_not_configured() -> None:
-    response = client.post("/api/voice/speak", json={"text": "Hello from Jarvis."})
+    response = client.post("/api/voice/speak", json={"text": "Hello from Omni."})
     assert response.status_code == 503
     assert "ELEVENLABS_API_KEY" in response.json()["detail"]

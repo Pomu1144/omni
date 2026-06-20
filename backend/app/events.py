@@ -6,7 +6,7 @@ from fastapi import WebSocket
 from app.config import settings
 from app.models import ActivityEvent
 
-logger = logging.getLogger("jarvis.events")
+logger = logging.getLogger("omni.events")
 
 
 class ActivityLog:

@@ -1,6 +1,6 @@
-# Jarvis Command Center — Dashboard
+# Omni Command Center — Dashboard
 
-React + TypeScript (Vite) frontend for the Jarvis Command Center. See the
+React + TypeScript (Vite) frontend for the Omni Command Center. See the
 [repo root README](../README.md) for the full architecture and how to run
 the backend it talks to.
 

@@ -4,7 +4,7 @@ from app.agents.ollama_agent import OllamaAgent
 from app.models import AgentResult
 
 
-class JarvisCore:
+class OmniCore:
     """Main command router. Tries agents in order; first match wins.
 
     OllamaAgent is the catch-all and must stay last.
@@ -20,4 +20,4 @@ class JarvisCore:
         for agent in self.agents:
             if agent.can_handle(text):
                 return await agent.handle(text)
-        return AgentResult(agent="JarvisCore", response="No agent could handle that command.")
+        return AgentResult(agent="OmniCore", response="No agent could handle that command.")
