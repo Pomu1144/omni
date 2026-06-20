@@ -26,7 +26,7 @@ class Settings:
     cors_origins: list[str] = field(
         default_factory=lambda: _split_csv(os.environ.get("CORS_ORIGINS", "http://localhost:5173"))
     )
-    repo_path: str = field(default_factory=lambda: os.environ.get("JARVIS_REPO_PATH", _DEFAULT_REPO_PATH))
+    repo_path: str = field(default_factory=lambda: os.environ.get("OMNI_REPO_PATH", _DEFAULT_REPO_PATH))
     activity_log_limit: int = 200
 
     # Voice output (ElevenLabs text-to-speech). See backend/.env.example.

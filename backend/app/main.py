@@ -6,7 +6,7 @@ from app.api.voice import router as voice_router
 from app.api.ws import router as ws_router
 from app.config import settings
 
-app = FastAPI(title="Jarvis Command Center API")
+app = FastAPI(title="Omni Command Center API")
 
 app.add_middleware(
     CORSMiddleware,

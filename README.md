@@ -1,10 +1,10 @@
-# Jarvis Command Center
+# Omni Command Center
 
 A personal AI workflow operating system, not a chatbot: one orchestrator
-(`JarvisCore`) routing commands to specialized agents, with a dashboard
+(`OmniCore`) routing commands to specialized agents, with a dashboard
 designed to live on its own monitor.
 
-**Safety rule:** Jarvis prepares, compares, drafts, navigates, and automates —
+**Safety rule:** Omni prepares, compares, drafts, navigates, and automates —
 any purchase, payment, booking, ride request, cancellation, email send, PR
 merge, push, or destructive action must go through the approval queue and
 get explicit user confirmation. See [docs/SPEC.md](docs/SPEC.md) for the full
@@ -21,12 +21,12 @@ yet.
 ## Architecture
 
 ```
-backend/   FastAPI app: JarvisCore router, agents, approval queue, WebSocket
+backend/   FastAPI app: OmniCore router, agents, approval queue, WebSocket
 frontend/  React + TypeScript dashboard (Vite)
 docs/      Product spec and roadmap
 ```
 
-Commands flow: dashboard → `POST /api/command` → `JarvisCore.route()` picks
+Commands flow: dashboard → `POST /api/command` → `OmniCore.route()` picks
 the first agent whose `can_handle()` matches → agent returns a result → if
 the result is marked `requires_approval`, it's queued instead of executed
 and surfaced in the Approval Queue panel; otherwise it's broadcast on the
@@ -47,7 +47,7 @@ Runs on `http://localhost:8000`. Optional env vars: `OLLAMA_URL` (default
 `http://localhost:11434`), `OLLAMA_MODEL` (default `llama3`), `CORS_ORIGINS`
 (default `http://localhost:5173`).
 
-To hear Jarvis speak its responses (Voice Mode output), copy
+To hear Omni speak its responses (Voice Mode output), copy
 `backend/.env.example` to `backend/.env` and set `ELEVENLABS_API_KEY` to a
 key from [elevenlabs.io](https://elevenlabs.io/app/settings/api-keys).
 `backend/.env` is gitignored and only read locally. Without it, voice input

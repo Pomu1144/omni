@@ -1,8 +1,8 @@
 from app.approval import ApprovalStore
 from app.models import WorkflowButton
-from app.router import JarvisCore
+from app.router import OmniCore
 
-router = JarvisCore()
+router = OmniCore()
 approvals = ApprovalStore()
 
 workflow_buttons: list[WorkflowButton] = [

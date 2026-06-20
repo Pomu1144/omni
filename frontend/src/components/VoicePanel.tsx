@@ -14,7 +14,7 @@ interface VoicePanelProps {
 }
 
 const MIC_LABEL: Record<MicState, string> = {
-  idle: "Talk to Jarvis",
+  idle: "Talk to Omni",
   listening: "Listening…",
   denied: "Mic access denied",
   unsupported: "Mic not supported",
@@ -57,7 +57,7 @@ export function VoicePanel({
         </p>
       )}
       {supported && ttsConfigured === false && (
-        <p className="voice-note">Add ELEVENLABS_API_KEY to backend/.env to hear Jarvis speak responses.</p>
+        <p className="voice-note">Add ELEVENLABS_API_KEY to backend/.env to hear Omni speak responses.</p>
       )}
       {error && <p className="voice-note voice-error">{error}</p>}
       {transcript && <p className="voice-transcript">"{transcript}"</p>}

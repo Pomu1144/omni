@@ -4,13 +4,13 @@ Status against the [MVP build order](./SPEC.md#14-suggested-mvp-build-order) fro
 Checked items are scaffolded and working; unchecked items are not started.
 
 - [x] 1. React dashboard — `frontend/` (Vite + React + TypeScript), three-panel layout
-      mirroring the Monitor 2 "Jarvis Command Center" spec.
+      mirroring the Monitor 2 "Omni Command Center" spec.
 - [x] 2. FastAPI backend — `backend/` app with REST API.
 - [x] 3. WebSocket live updates — `/ws/events`, broadcasts activity to the dashboard
       in real time.
 - [x] 4. Local Ollama connection — `OllamaAgent` calls a local Ollama server if
       reachable, degrades to a clear "Ollama not running" message otherwise.
-- [x] 5. Command router — `JarvisCore` dispatches text commands to the first agent
+- [x] 5. Command router — `OmniCore` dispatches text commands to the first agent
       that can handle them.
 - [x] 6. Workflow buttons — `/api/workflows` + `WorkflowButtons` component fire
       canned commands.
@@ -26,7 +26,7 @@ Checked items are scaffolded and working; unchecked items are not started.
       (Chrome/Edge only) for speech-to-text; the mic button feeds the
       transcript straight into the command router.
 - [x] 11. Voice output — `backend/app/voice.py` proxies ElevenLabs
-      text-to-speech (key stays server-side via `backend/.env`); Jarvis
+      text-to-speech (key stays server-side via `backend/.env`); Omni
       speaks agent responses aloud when Voice Mode is on, with a HUD that
       visually reflects idle/listening/thinking/speaking states.
 
