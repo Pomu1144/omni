@@ -81,6 +81,13 @@ instead of failing. To enable it: install [Ollama](https://ollama.com), run
 `ollama serve`, and `ollama pull llama3` (or set `OLLAMA_MODEL` to whatever
 you pulled).
 
+Generation runs locally on your CPU/GPU — on modest hardware a larger model
+can peg the machine for the duration of a response. If commands feel like
+they're hanging the whole computer rather than just the UI, pull a smaller
+model (e.g. `llama3.2:1b` or `phi3`) and point `OLLAMA_MODEL` at it. The
+dashboard itself now times out any single command after 20s either way, so
+the UI won't hang forever even if Ollama does.
+
 ## Adding an agent
 
 Implement `Agent` (`backend/app/agents/base.py`): `can_handle(command) ->

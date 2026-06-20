@@ -24,8 +24,9 @@ export function CommandBar({ onStart, onResult }: CommandBarProps) {
       const result = await api.sendCommand(command);
       onResult(result, command);
       setText("");
-    } catch {
-      setError("Couldn't reach the Omni backend. Is it running on port 8000?");
+    } catch (err) {
+      const timedOut = err instanceof DOMException && err.name === "AbortError";
+      setError(timedOut ? "Omni timed out responding to that command." : "Couldn't reach the Omni backend. Is it running on port 8000?");
     } finally {
       setSending(false);
     }

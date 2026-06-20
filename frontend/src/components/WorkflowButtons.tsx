@@ -26,8 +26,12 @@ export function WorkflowButtons({ workflows, onStart, onResult }: WorkflowButton
     try {
       const result = await api.sendCommand(workflow.command);
       onResult(result, workflow.command);
-    } catch {
-      onResult({ status: "completed", response: "Couldn't reach the backend." }, workflow.command);
+    } catch (err) {
+      const timedOut = err instanceof DOMException && err.name === "AbortError";
+      onResult(
+        { status: "completed", response: timedOut ? "Omni timed out responding to that command." : "Couldn't reach the backend." },
+        workflow.command,
+      );
     } finally {
       setPendingId(null);
     }

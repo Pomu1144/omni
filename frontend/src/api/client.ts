@@ -11,8 +11,24 @@ import type {
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000";
 export const WS_URL = `${API_BASE_URL.replace(/^http/, "ws")}/ws/events`;
 
+// Backend agents cap their own work (Ollama: ~5s, git subprocesses: 10s) and
+// always return a result either way, but a hung connection (backend down,
+// dropped socket) would otherwise leave a fetch — and any UI state waiting
+// on it, like the HUD's "thinking" indicator — pending forever.
+const REQUEST_TIMEOUT_MS = 20000;
+
+async function fetchWithTimeout(path: string, init?: RequestInit): Promise<Response> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  try {
+    return await fetch(`${API_BASE_URL}${path}`, { signal: controller.signal, ...init });
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(`${API_BASE_URL}${path}`, {
+  const response = await fetchWithTimeout(path, {
     headers: { "Content-Type": "application/json" },
     ...init,
   });
@@ -37,7 +53,7 @@ export const api = {
     }),
   voiceStatus: () => request<VoiceStatus>("/api/voice/status"),
   speak: async (text: string): Promise<Blob> => {
-    const response = await fetch(`${API_BASE_URL}/api/voice/speak`, {
+    const response = await fetchWithTimeout("/api/voice/speak", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text }),

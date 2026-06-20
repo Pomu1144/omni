@@ -105,8 +105,9 @@ function App() {
     try {
       const result = await api.sendCommand(text);
       handleCommandResult(result);
-    } catch {
-      setVoiceError("Couldn't reach the Omni backend.");
+    } catch (err) {
+      const timedOut = err instanceof DOMException && err.name === "AbortError";
+      setVoiceError(timedOut ? "Omni timed out responding to that command." : "Couldn't reach the Omni backend.");
     } finally {
       setThinking(false);
     }
