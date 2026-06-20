@@ -3,11 +3,13 @@ import { api } from "../api/client";
 
 interface WorkflowButtonsProps {
   workflows: WorkflowButtonDef[];
+  onStart?: () => void;
   onResult: (result: CommandResponse, commandText: string) => void;
 }
 
-export function WorkflowButtons({ workflows, onResult }: WorkflowButtonsProps) {
+export function WorkflowButtons({ workflows, onStart, onResult }: WorkflowButtonsProps) {
   async function run(workflow: WorkflowButtonDef) {
+    onStart?.();
     try {
       const result = await api.sendCommand(workflow.command);
       onResult(result, workflow.command);

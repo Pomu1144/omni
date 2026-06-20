@@ -18,6 +18,10 @@ class CommandRequest(BaseModel):
     text: str
 
 
+class SpeakRequest(BaseModel):
+    text: str
+
+
 class AgentResult(BaseModel):
     agent: str
     response: str

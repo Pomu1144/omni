@@ -22,20 +22,27 @@ Checked items are scaffolded and working; unchecked items are not started.
       Approve/Reject. Only a simulated "open PR" demo action is gated on it
       today; future risky agents (real PR merges, sends, bookings, payments)
       must route through this same queue rather than acting directly.
+- [x] 10. Voice input — `useVoiceIO` hook wraps the browser's Web Speech API
+      (Chrome/Edge only) for speech-to-text; the mic button feeds the
+      transcript straight into the command router.
+- [x] 11. Voice output — `backend/app/voice.py` proxies ElevenLabs
+      text-to-speech (key stays server-side via `backend/.env`); Jarvis
+      speaks agent responses aloud when Voice Mode is on, with a HUD that
+      visually reflects idle/listening/thinking/speaking states.
 
-Not started: 8 (Docs/TDD generator), 9 (Playwright browser automation), 10–11
-(voice input/output), 13 (calendar/email integration), 14 (reservation
-assistant), 15 (persistent memory — currently everything is in-memory and
-resets on restart), 16 (full multi-agent routing — only GitAgent + OllamaAgent
-exist today).
+Not started: 8 (Docs/TDD generator), 9 (Playwright browser automation), 13
+(calendar/email integration), 14 (reservation assistant), 15 (persistent
+memory — currently everything is in-memory and resets on restart), 16 (full
+multi-agent routing — only GitAgent + OllamaAgent exist today).
 
 ## Why this slice first
 
 Steps 1–6 plus a read-only Git agent and the approval-queue skeleton give a
 runnable, end-to-end loop (UI → command → router → agent → WebSocket → UI)
 without requiring any credentials or local services beyond an optional Ollama
-install. Voice (needs STT/TTS keys or local models), browser automation (needs
-Playwright + real sites to drive), and reservations/email (need real provider
+install. Voice now layers on top of that same loop (STT is free/local via the
+browser; TTS degrades gracefully without a key). Browser automation (needs
+Playwright + real sites to drive) and reservations/email (need real provider
 accounts and explicit safety review) are deliberately deferred to their own
 sessions rather than half-built here.
 

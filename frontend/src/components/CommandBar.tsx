@@ -3,10 +3,11 @@ import { api } from "../api/client";
 import type { CommandResponse } from "../types";
 
 interface CommandBarProps {
+  onStart?: () => void;
   onResult: (result: CommandResponse, commandText: string) => void;
 }
 
-export function CommandBar({ onResult }: CommandBarProps) {
+export function CommandBar({ onStart, onResult }: CommandBarProps) {
   const [text, setText] = useState("");
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -18,6 +19,7 @@ export function CommandBar({ onResult }: CommandBarProps) {
 
     setSending(true);
     setError(null);
+    onStart?.();
     try {
       const result = await api.sendCommand(command);
       onResult(result, command);
@@ -35,7 +37,7 @@ export function CommandBar({ onResult }: CommandBarProps) {
         type="text"
         value={text}
         onChange={(event) => setText(event.target.value)}
-        placeholder='Type a command, e.g. "git status" — voice input lands in a later milestone'
+        placeholder='Type a command, e.g. "git status" — or use voice mode above'
         disabled={sending}
       />
       <button type="submit" disabled={sending || !text.trim()}>
