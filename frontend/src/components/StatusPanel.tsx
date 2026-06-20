@@ -11,21 +11,26 @@ export function StatusPanel({ health, agents, wsConnected }: StatusPanelProps) {
     <div className="status-panel">
       <div className="status-row">
         <span className={`status-dot ${wsConnected ? "ok" : "down"}`} />
-        Dashboard live feed: {wsConnected ? "connected" : "reconnecting…"}
+        Live feed: {wsConnected ? "connected" : "reconnecting…"}
       </div>
       <div className="status-row">
         <span className={`status-dot ${health?.ollama_reachable ? "ok" : "down"}`} />
-        Local Ollama: {health ? (health.ollama_reachable ? "reachable" : "not running") : "checking…"}
+        Ollama: {health == null ? "checking…" : health.ollama_reachable ? "online" : "offline"}
       </div>
-      <h3>Agents</h3>
-      <ul className="agent-list">
-        {agents.map((agent) => (
-          <li key={agent.name}>
-            <strong>{agent.name}</strong>
-            <span>{agent.description}</span>
-          </li>
-        ))}
-      </ul>
+
+      {agents.length > 0 && (
+        <>
+          <p className="status-section-title">Active Agents</p>
+          <ul className="agent-list">
+            {agents.map((agent) => (
+              <li key={agent.name}>
+                <span className="agent-name">{agent.name}</span>
+                <span className="agent-desc">{agent.description}</span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
     </div>
   );
 }

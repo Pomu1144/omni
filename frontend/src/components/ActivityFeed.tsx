@@ -1,35 +1,35 @@
 import type { ActivityEvent } from "../types";
 
-interface ActivityFeedProps {
-  events: ActivityEvent[];
-}
-
 function describe(event: ActivityEvent): string {
-  const payload = event.payload as Record<string, unknown>;
+  const p = event.payload as Record<string, unknown>;
   switch (event.type) {
     case "command_received":
-      return `> ${payload.text}`;
+      return `// cmd  ${p.text}`;
     case "agent_result":
-      return `${payload.agent}: ${payload.response}`;
+      return `${p.agent}  →  ${p.response}`;
     case "approval_requested":
-      return `⚑ approval requested (${payload.agent}): ${payload.summary}`;
+      return `⚑  approval required  [${p.agent}]  ${p.summary}`;
     case "approval_resolved":
-      return `${payload.status === "approved" ? "✓" : "✗"} approval ${payload.status}: ${payload.summary}`;
+      return `${p.status === "approved" ? "✓" : "✗"}  ${p.status}  [${p.agent}]  ${p.summary}`;
     default:
-      return JSON.stringify(payload);
+      return JSON.stringify(p);
   }
 }
 
-export function ActivityFeed({ events }: ActivityFeedProps) {
+function timeLabel(ts: string) {
+  return new Date(ts).toLocaleTimeString(undefined, { hour12: false });
+}
+
+export function ActivityFeed({ events }: { events: ActivityEvent[] }) {
   if (events.length === 0) {
-    return <p className="panel-empty">No activity yet. Send a command or click a workflow button.</p>;
+    return <p className="panel-empty">// no events — issue a directive to begin</p>;
   }
 
   return (
     <ul className="activity-feed">
       {events.map((event) => (
         <li key={event.id} className={`activity-item activity-${event.type}`}>
-          <span className="activity-time">{new Date(event.timestamp).toLocaleTimeString()}</span>
+          <span className="activity-time">{timeLabel(event.timestamp)}</span>
           <span className="activity-text">{describe(event)}</span>
         </li>
       ))}
