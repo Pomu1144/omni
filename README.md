@@ -13,9 +13,10 @@ built so far versus what's still planned.
 
 This repo currently has the foundation only: a FastAPI backend with a
 command router and two agents (git status/branch/log, and a local-Ollama
-fallback), a WebSocket event stream, an approval queue, and a React +
-TypeScript dashboard. Voice, browser automation, reservations, and the
-email/calendar/Jira integrations described in the spec are not built yet.
+fallback), a WebSocket event stream, an approval queue, voice input/output,
+and a React + TypeScript dashboard. Browser automation, reservations, and
+the email/calendar/Jira integrations described in the spec are not built
+yet.
 
 ## Architecture
 
@@ -46,6 +47,13 @@ Runs on `http://localhost:8000`. Optional env vars: `OLLAMA_URL` (default
 `http://localhost:11434`), `OLLAMA_MODEL` (default `llama3`), `CORS_ORIGINS`
 (default `http://localhost:5173`).
 
+To hear Jarvis speak its responses (Voice Mode output), copy
+`backend/.env.example` to `backend/.env` and set `ELEVENLABS_API_KEY` to a
+key from [elevenlabs.io](https://elevenlabs.io/app/settings/api-keys).
+`backend/.env` is gitignored and only read locally. Without it, voice input
+and typed commands still work, but responses stay text-only and the
+dashboard shows a "voice output not configured" notice.
+
 Run tests with `.venv/bin/pytest`.
 
 ### Frontend
@@ -58,6 +66,12 @@ npm run dev
 
 Runs on `http://localhost:5173`. Copy `.env.example` to `.env` to point it at
 a non-default backend URL (`VITE_API_BASE_URL`).
+
+Voice Mode input (the mic button) uses the browser's built-in Speech
+Recognition API, which is only available in Chrome and Edge — other browsers
+fall back to typed commands with a clear "not supported" notice. Voice
+output is proxied through the backend's ElevenLabs integration; see the
+backend setup above.
 
 ### Optional: local Ollama
 

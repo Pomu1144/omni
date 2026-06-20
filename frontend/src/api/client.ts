@@ -4,6 +4,7 @@ import type {
   HealthStatus,
   PendingApproval,
   ActivityEvent,
+  VoiceStatus,
   WorkflowButtonDef,
 } from "../types";
 
@@ -34,4 +35,16 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ approve }),
     }),
+  voiceStatus: () => request<VoiceStatus>("/api/voice/status"),
+  speak: async (text: string): Promise<Blob> => {
+    const response = await fetch(`${API_BASE_URL}/api/voice/speak`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+    });
+    if (!response.ok) {
+      throw new Error(`POST /api/voice/speak failed: ${response.status}`);
+    }
+    return response.blob();
+  },
 };

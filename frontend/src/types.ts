@@ -43,3 +43,8 @@ export interface HealthStatus {
   status: string;
   ollama_reachable: boolean;
 }
+
+export interface VoiceStatus {
+  configured: boolean;
+  voice_id: string;
+}
